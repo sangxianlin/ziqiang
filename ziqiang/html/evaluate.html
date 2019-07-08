@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <!-- 全屏显示-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- DNS预解析-->
+    <meta name="description" content="" />
+
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link href="../css/common/reset.css" rel="stylesheet">
+    <link href="../css/common/common.css" rel="stylesheet"> 
+
+    <link rel="stylesheet" href="../css/swiper.min.css"> 
+    <link href="../css/index.css" rel="stylesheet">   
+    <title>子强</title>
+
+  </head>
+  <body>
+    <span class="go"></span>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">              
+				<div class="box pageone">
+					</br>
+					<h4>【微信号】18839159670</h4>
+				</div>
+            </div>
+			<div class="swiper-slide">
+				<div class="box pageone pagethree">
+					<img style="width:37.5rem;margin:-1rem 0 1rem -1rem;" class="pic" src="../img/微信图片_20190708130735.jpg" alt="">
+				</div>
+            </div>
+			<div class="swiper-slide">              
+				<div class="box pageone">
+					</br>
+					<h4>【微信号】18839159670</h4>
+				</div>
+            </div>
+            <div class="swiper-slide">
+				<div class="box pageone pagethree">
+					<img style="width:37.5rem;margin:-1rem 0 1rem -1rem;" class="pic" src="../img/微信图片_20190708130742.jpg" alt="">
+					<div class="details" style="padding-top:1rem;">
+					  <ul>
+						<li><span class="tit">地点：</span><span>郑州市金水区花园路国贸360</span></li>
+					  </ul>
+					</div>
+				</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+   
+    <script src="../js/zepto-1.1.4.min.js"></script>
+    <script src="../js/swiper.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script>
+
+      // 字体控制
+      function setFontsize() {
+          document.querySelector('html').style.fontSize = (window.screen.width / 375 * 10 + 'px');
+      }
+      setFontsize();
+      window.onresize = function() {
+          setFontsize();
+      }
+
+      var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        direction: 'vertical',
+        initialSlide:0,
+        onSlideChangeStart:function(d){
+          
+          var obj = document.querySelectorAll('.go');
+          if(d.activeIndex==4){
+            obj[0].style.display = 'none';
+
+          }else{
+            obj[0].style.display = 'block';
+          }
+        }
+      });
+
+$.ajax({
+  type: 'GET',
+  url: 'http://life.fotile.com/fotile-api-0.0.2/wx/wxConfig.json?url='+encodeURIComponent(window.location.href.split('#')[0])',
+  // data to be added to query string:
+
+  // dataType: 'json',
+  // timeout: 300,
+
+  success: function(data){
+    console.info(data.appId);
+
+  wx.config({
+      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      appId: data.appId, // 必填，公众号的唯一标识
+      timestamp:data.timestamp, // 必填，生成签名的时间戳
+      nonceStr: data.nonceStr, // 必填，生成签名的随机串
+      signature: data.signature,
+      jsApiList:  [
+            "onMenuShareTimeline",
+            "onMenuShareAppMessage",
+            "onMenuShareQQ",
+            "onMenuShareWeibo",
+            "onMenuShareQZone"
+          ]
+  });
+
+wx.ready(function() {
+  //分享给朋友圈
+    wx.onMenuShareTimeline({
+        link: 'http://h5.fotilestyle.com/wp/html/evaluate.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://h5.fotilestyle.com/wp/img/logo.png', // 分享图标
+        success: function () { 
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+    });
+
+    //分享给朋友
+    wx.onMenuShareAppMessage({
+        success: function () { 
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+    });
+
+
+
+});
+  
+
+
+
+
+
+
+
+
+  },
+  error: function(xhr, type){
+    //alert(111);
+  }
+})
+
+
+
+
+
+
+
+
+
+
+      
+    </script>
+  </body>
+</html>
